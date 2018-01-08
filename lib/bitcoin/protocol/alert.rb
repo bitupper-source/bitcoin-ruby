@@ -33,8 +33,13 @@ module Protocol
       set_sub_ver,       payload = Bitcoin::Protocol.unpack_var_string_array(payload)
       priority,          payload = payload.unpack("Va*")
       comment,           payload = Bitcoin::Protocol.unpack_var_string(payload)
-      status_bar,        payload = Bitcoin::Protocol.unpack_var_string(payload)
-      reserved,          payload = Bitcoin::Protocol.unpack_var_string(payload)
+      if payload == "" then
+        status_bar = ""
+        reserved = ""
+      else
+        status_bar,        payload = Bitcoin::Protocol.unpack_var_string(payload)
+        reserved,          payload = Bitcoin::Protocol.unpack_var_string(payload)
+      end
 
       values = [ version, relay_until, expiration, id, cancel, set_cancel, min_ver, max_ver, set_sub_ver, priority, comment, status_bar, reserved ]
 
